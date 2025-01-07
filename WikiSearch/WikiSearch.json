@@ -1,0 +1,11 @@
+{
+  "Author": "eden",
+  "Name": "Wiki Search",
+  "Punchline": "Search the wiki easily",
+  "Description": "User /wiki followed by what you want to search and it will open up a wiki page with that searc.  Also adds a menu when you right click items.  ",
+  "ApplicableVersion": "any",
+  "Tags": [
+    "UI",
+    "Utility"
+  ]
+}
