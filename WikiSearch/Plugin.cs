@@ -100,8 +100,14 @@ public sealed class Plugin : IDalamudPlugin
         else
         {
             itemId = this.GetItemIdFromAgent(args.AddonName);
+            
         }
-
+        if (itemId == 0u)
+        {
+            //Log.Warning("Failed to get item ID");
+            return;
+        }
+        
         var item = this.DM.Excel.GetSheet<Item>().GetRowOrDefault(itemId);
 
         args.AddMenuItem(new MenuItem
@@ -109,7 +115,7 @@ public sealed class Plugin : IDalamudPlugin
             Name = "Search Wiki",
             OnClicked = this.ContextMenuOpenUrl(itemId),
             Prefix = SeIconChar.BoxedLetterW,
-            PrefixColor = 12
+            PrefixColor = 12,
         });
     }
 
