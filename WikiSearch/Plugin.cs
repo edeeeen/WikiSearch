@@ -41,13 +41,13 @@ public sealed class Plugin : IDalamudPlugin
         Configuration = PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
 
         // you might normally want to embed resources and load them from the manifest stream
-        var goatImagePath = Path.Combine(PluginInterface.AssemblyLocation.Directory?.FullName!, "goat.png");
+        //var goatImagePath = Path.Combine(PluginInterface.AssemblyLocation.Directory?.FullName!, "goat.png");
 
         ConfigWindow = new ConfigWindow(this);
-        MainWindow = new MainWindow(this, goatImagePath);
+        //MainWindow = new MainWindow(this, goatImagePath);
 
         WindowSystem.AddWindow(ConfigWindow);
-        WindowSystem.AddWindow(MainWindow);
+        //WindowSystem.AddWindow(MainWindow);
 
         CommandManager.AddHandler(CommandName, new CommandInfo(OnCommand)
         {
@@ -61,7 +61,7 @@ public sealed class Plugin : IDalamudPlugin
         PluginInterface.UiBuilder.OpenConfigUi += ToggleConfigUI;
 
         // Adds another button that is doing the same but for the main ui of the plugin
-        PluginInterface.UiBuilder.OpenMainUi += ToggleMainUI;
+        //PluginInterface.UiBuilder.OpenMainUi += ToggleMainUI;
 
         // Add a simple message to the log with level set to information
         // Use /xllog to open the log window in-game
@@ -71,6 +71,7 @@ public sealed class Plugin : IDalamudPlugin
         this.ContextMenu = contextMenu;
         this.ContextMenu.OnMenuOpened += this.OnContextMenuOpened;
         this.DM = dataManager;
+        
     }
 
     public void Dispose()
@@ -78,7 +79,7 @@ public sealed class Plugin : IDalamudPlugin
         WindowSystem.RemoveAllWindows();
 
         ConfigWindow.Dispose();
-        MainWindow.Dispose();
+        //MainWindow.Dispose();
         
         this.ContextMenu.OnMenuOpened -= this.OnContextMenuOpened;
 
@@ -92,6 +93,10 @@ public sealed class Plugin : IDalamudPlugin
     
     private void OnContextMenuOpened(IMenuOpenedArgs args)
     {
+        if(!Configuration.ContextMenu)
+        {
+            return;
+        } 
         uint itemId;
 
         if (args.MenuType == ContextMenuType.Inventory)
