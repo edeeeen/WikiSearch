@@ -5,6 +5,7 @@ using Dalamud.IoC;
 using Dalamud.Plugin;
 using System.IO;
 using System.Runtime.InteropServices;
+using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.Gui.ContextMenu;
 using Dalamud.Game.Text;
 using Dalamud.Interface.Windowing;
@@ -109,22 +110,40 @@ public sealed class Plugin : IDalamudPlugin
         }
         
         var item = this.DM.Excel.GetSheet<Item>().GetRowOrDefault(itemId);
-
-        args.AddMenuItem(new MenuItem
+        //var luminaItem = Data.Excel.GetSheet<EventItem>().GetRowOrDefault(itemId);
+        //itemId >= 2000000 ? luminaItem as EventItem? : luminaItem as Item?;
+        //int x;
+        //if (itemId >= 2000000 ? item as EventItem? : item as Item?);
+        
+        //CharacterInspect doesnt work
+        //this first case does not ever work atm
+        if(args.Target is MenuTargetDefault defMen && defMen.TargetName != null){
+            args.AddMenuItem(new MenuItem
+            {
+                Name = "Search Wiki",
+                OnClicked = this.ContextMenuOpenUrl(item.Value.Name.ExtractText()),
+                Prefix = SeIconChar.BoxedLetterW,
+                PrefixColor = 12,
+            });
+        }
+        else
         {
-            Name = "Search Wiki",
-            OnClicked = this.ContextMenuOpenUrl(itemId),
-            Prefix = SeIconChar.BoxedLetterW,
-            PrefixColor = 12,
-        });
+            args.AddMenuItem(new MenuItem
+            {
+                Name = "Search Wiki",
+                OnClicked = this.ContextMenuOpenUrl(item.Value.Name.ExtractText()),
+                Prefix = SeIconChar.BoxedLetterW,
+                PrefixColor = 12,
+            });
+        }
+        
     }
-
-    private Action<IMenuItemClickedArgs> ContextMenuOpenUrl(uint itemid)
+    private Action<IMenuItemClickedArgs> ContextMenuOpenUrl(string itemid)
     {
         return (IMenuItemClickedArgs args) =>
         {
-            OpenUrl("https://ffxiv.consolegameswiki.com/mediawiki/index.php?search=id-gt+%3D+" + itemid);
-
+            OpenUrl("https://ffxiv.consolegameswiki.com/mediawiki/index.php?search=" + itemid);
+            
         };
     }
     private unsafe uint GetItemIdFromAgent(string? addonName)
@@ -150,7 +169,7 @@ public sealed class Plugin : IDalamudPlugin
         }
         catch
         {
-            // hack because of this: https://github.com/dotnet/corefx/issues/10361
+
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 url = url.Replace("&", "^&");
