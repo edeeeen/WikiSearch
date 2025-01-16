@@ -6,7 +6,7 @@
         "InternalName": "WikiSearch",
         "AssemblyVersion": "0.1.2",
         "TestingAssemblyVersion": "0.1.2",
-        "RepoUrl": "https://gitlab.com/joshua.software.dev/LMeter",
+        "RepoUrl": "https://github.com/edeeeen/WikiSearch",
         "ApplicableVersion": "any",
         "DalamudApiLevel": 9,
         "IsHide": "False",
