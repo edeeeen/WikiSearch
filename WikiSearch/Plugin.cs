@@ -126,7 +126,7 @@ public sealed class Plugin : IDalamudPlugin
             args.AddMenuItem(new MenuItem
             {
                 Name = "Search Wiki",
-                OnClicked = this.ContextMenuOpenUrl(item.Value.Name.ExtractText()),
+                OnClicked = this.ContextMenuOpenUrl(/*item.Value.Name.ExtractText()*/ defMen.TargetObjectId.ToString()),
                 Prefix = SeIconChar.BoxedLetterW,
                 PrefixColor = 12,
             });
