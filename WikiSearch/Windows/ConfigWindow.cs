@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Numerics;
 using Dalamud.Interface.Windowing;
-using ImGuiNET;
+using Dalamud.Bindings.ImGui;
 
-namespace SamplePlugin.Windows;
+
+namespace WikiSearch.Windows;
 
 public class ConfigWindow : Window, IDisposable
 {
@@ -26,7 +27,7 @@ public class ConfigWindow : Window, IDisposable
 
     public override void PreDraw()
     {
-        
+
     }
 
     public override void Draw()

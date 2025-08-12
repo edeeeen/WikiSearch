@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using Dalamud.Game.Command;
 using Dalamud.IoC;
@@ -12,9 +12,9 @@ using Dalamud.Interface.Windowing;
 using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Client.UI.Agent;
 using Lumina.Excel.Sheets;
-using SamplePlugin.Windows;
+using WikiSearch.Windows;
 
-namespace SamplePlugin;
+namespace WikiSearch;
 
 public sealed class Plugin : IDalamudPlugin
 {
@@ -29,7 +29,7 @@ public sealed class Plugin : IDalamudPlugin
 
     public Configuration Configuration { get; init; }
 
-    public readonly WindowSystem WindowSystem = new("Wiki Search");
+    public readonly WindowSystem WindowSystem = new("WikiSearch");
     private ConfigWindow ConfigWindow { get; init; }
     private MainWindow MainWindow { get; init; }
     
@@ -93,56 +93,53 @@ public sealed class Plugin : IDalamudPlugin
     
     private void OnContextMenuOpened(IMenuOpenedArgs args)
     {
-        if(!Configuration.ContextMenu)
-        {
-            return;
-        } 
-        uint itemId;
+      if (!Configuration.ContextMenu)
+      {
+        return;
+      }
 
-        if (args.MenuType == ContextMenuType.Inventory)
-        {
-            itemId = (args.Target as MenuTargetInventory)?.TargetItem?.ItemId ?? 0u;
-        }
-        else
-        {
-            itemId = this.GetItemIdFromAgent(args.AddonName);
-            
-        }
+      uint itemId;
+
+      if (args.MenuType == ContextMenuType.Inventory)
+      {
+        itemId = (args.Target as MenuTargetInventory)?.TargetItem?.BaseItemId ?? 0u;
+      }
+      else
+      {
+        itemId = this.GetItemIdFromAgent(args.AddonName);
+
         if (itemId == 0u)
         {
-            //Log.Warning("Failed to get item ID");
-            return;
+          //this.Log.Warning("Failed to get item ID from agent {0}. Attempting hovered item.", args.AddonName ?? "null");
+          //itemId = (uint)this.GameGui.HoveredItem % 500000;
         }
-        
-        var item = this.DM.Excel.GetSheet<Item>().GetRowOrDefault(itemId);
-        //var luminaItem = Data.Excel.GetSheet<EventItem>().GetRowOrDefault(itemId);
-        //itemId >= 2000000 ? luminaItem as EventItem? : luminaItem as Item?;
-        //int x;
-        //if (itemId >= 2000000 ? item as EventItem? : item as Item?);
-        
-        //CharacterInspect doesnt work
-        //this first case does not ever work atm
-        if(args.Target is MenuTargetDefault defMen && defMen.TargetName != null){
-            args.AddMenuItem(new MenuItem
-            {
-                Name = "Search Wiki",
-                OnClicked = this.ContextMenuOpenUrl(/*item.Value.Name.ExtractText()*/ defMen.TargetObjectId.ToString()),
-                Prefix = SeIconChar.BoxedLetterW,
-                PrefixColor = 12,
-            });
-        }
-        else
-        {
-            args.AddMenuItem(new MenuItem
-            {
-                Name = "Search Wiki",
-                OnClicked = this.ContextMenuOpenUrl(item.Value.Name.ExtractText()),
-                Prefix = SeIconChar.BoxedLetterW,
-                PrefixColor = 12,
-            });
-        }
-        
+      }
+
+      if (itemId == 0u)
+      {
+        //this.Log.Warning("Failed to get item ID");
+        return;
+      }
+
+      var item = this.DM.Excel.GetSheet<Item>().GetRowOrDefault(itemId);
+
+      if (!item.HasValue)
+      {
+        //this.Log.Warning("Failed to get item data for item ID {0}", itemId);
+        return;
+      }
+
+      args.AddMenuItem(new MenuItem
+      {
+        Name = "Search Wiki",
+        OnClicked = this.ContextMenuOpenUrl(item.Value.Name.ExtractText()),
+        Prefix = SeIconChar.BoxedLetterM,
+        PrefixColor = 12,
+      });
     }
+
+        
+    
     private Action<IMenuItemClickedArgs> ContextMenuOpenUrl(string itemid)
     {
         return (IMenuItemClickedArgs args) =>

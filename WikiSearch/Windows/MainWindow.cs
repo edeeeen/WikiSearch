@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 using System.Numerics;
 using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
 using Dalamud.Interface.Windowing;
-using ImGuiNET;
+using Dalamud.Bindings.ImGui;
 using Lumina.Excel.Sheets;
 
-namespace SamplePlugin.Windows;
+namespace WikiSearch.Windows;
 
 public class MainWindow : Window, IDisposable
 {
@@ -43,7 +43,7 @@ public class MainWindow : Window, IDisposable
         {
             Plugin.ToggleConfigUI();
         }
-
+        
         ImGui.Spacing();
 
         // Normally a BeginChild() would have to be followed by an unconditional EndChild(),
@@ -60,7 +60,7 @@ public class MainWindow : Window, IDisposable
                 {
                     using (ImRaii.PushIndent(55f))
                     {
-                        ImGui.Image(goatImage.ImGuiHandle, new Vector2(goatImage.Width, goatImage.Height));
+                        ImGui.Image(goatImage.Handle, new Vector2(goatImage.Width, goatImage.Height));
                     }
                 }
                 else
@@ -88,13 +88,13 @@ public class MainWindow : Window, IDisposable
 
                 // ExtractText() should be the preferred method to read Lumina SeStrings,
                 // as ToString does not provide the actual text values, instead gives an encoded macro string.
-                ImGui.TextUnformatted($"Our current job is ({localPlayer.ClassJob.RowId}) \"{localPlayer.ClassJob.Value.Abbreviation.ExtractText()}\"");
+                ImGui.TextUnformatted($"Our current job is ({localPlayer.ClassJob.RowId}) \"{localPlayer.ClassJob.Value.Abbreviation}\"");
 
                 // Example for quarrying Lumina directly, getting the name of our current area.
                 var territoryId = Plugin.ClientState.TerritoryType;
                 if (Plugin.DataManager.GetExcelSheet<TerritoryType>().TryGetRow(territoryId, out var territoryRow))
                 {
-                    ImGui.TextUnformatted($"We are currently in ({territoryId}) \"{territoryRow.PlaceName.Value.Name.ExtractText()}\"");
+                    ImGui.TextUnformatted($"We are currently in ({territoryId}) \"{territoryRow.PlaceName.Value.Name}\"");
                 }
                 else
                 {
