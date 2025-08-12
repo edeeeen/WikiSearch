@@ -2,3 +2,6 @@
 obj/
 bin/
 *.user
+.idea/.idea.WikiSearch/.idea/vcs.xml
+.idea/.idea.WikiSearch/.idea/encodings.xml
+.idea/.idea.WikiSearch/.idea/indexLayout.xml
