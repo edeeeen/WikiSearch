@@ -1,11 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Dalamud.NET.SDK/13.0.0">
-  <PropertyGroup>
-    <Version>0.1.4</Version>
-    <Description>Search the wiki effortlessly</Description>
-    <PackageProjectUrl>https://github.com/edeeeen/WikiSearch</PackageProjectUrl>
-    <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
-    <IsPackable>false</IsPackable>
-    <RootNamespace>WikiSearch</RootNamespace>
-  </PropertyGroup>
+<Project Sdk="Dalamud.NET.Sdk/14.0.1">
+    <PropertyGroup>
+        <Version>0.1.4</Version>
+        <Description>Search the wiki effortlessly</Description>
+        <PackageProjectUrl>https://github.com/edeeeen/WikiSearch</PackageProjectUrl>
+        <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+
+        <RootNamespace>WikiSearch</RootNamespace>
+        <AssemblyName>WikiSearch</AssemblyName>
+        <NoWarn>IDE0003</NoWarn>
+        <AssemblyVersion>0.1.4</AssemblyVersion>
+        <TargetFramework>net10.0-windows</TargetFramework>
+    </PropertyGroup>
 </Project>

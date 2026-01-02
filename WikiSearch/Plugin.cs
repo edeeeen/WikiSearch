@@ -31,7 +31,6 @@ public sealed class Plugin : IDalamudPlugin
 
     public readonly WindowSystem WindowSystem = new("WikiSearch");
     private ConfigWindow ConfigWindow { get; init; }
-    private MainWindow MainWindow { get; init; }
     
     private IDataManager DM { get; init; }
     public IContextMenu ContextMenu { get; init; }
@@ -71,7 +70,6 @@ public sealed class Plugin : IDalamudPlugin
         this.ContextMenu = contextMenu;
         this.ContextMenu.OnMenuOpened += this.OnContextMenuOpened;
         this.DM = dataManager;
-        
     }
 
     public void Dispose()
@@ -195,5 +193,4 @@ public sealed class Plugin : IDalamudPlugin
     private void DrawUI() => WindowSystem.Draw();
 
     public void ToggleConfigUI() => ConfigWindow.Toggle();
-    public void ToggleMainUI() => MainWindow.Toggle();
 }
