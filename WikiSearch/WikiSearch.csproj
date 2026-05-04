@@ -1,10 +1,9 @@
-<Project Sdk="Dalamud.NET.Sdk/14.0.1">
+<Project Sdk="Dalamud.NET.Sdk/15.0.0">
     <PropertyGroup>
-        <Version>0.1.5</Version>
+        <Version>0.1.6</Version>
         <Description>Search the wiki effortlessly</Description>
         <PackageProjectUrl>https://github.com/edeeeen/WikiSearch</PackageProjectUrl>
         <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
-
         <RootNamespace>WikiSearch</RootNamespace>
         <AssemblyName>WikiSearch</AssemblyName>
         <NoWarn>IDE0003</NoWarn>
